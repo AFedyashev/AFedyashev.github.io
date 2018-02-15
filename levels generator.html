@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  </head>
+  <body>
+	<script>
+
+		// Получение случайного числа
+		function getRandomInt(min, max) {
+			return Math.floor(Math.random() * (max - min + 1)) + min;
+		}
+
+		// Созадание малого двумерного массива 4x4
+		var matrix = new Array(4);
+		for (var i = 0; i < matrix.length; i++) {
+			matrix[i] = new Array(4);
+		}
+
+		// Создание большого двумерного массива 8x8
+		var fullMatrix = new Array(8);
+		for (var i = 0; i < fullMatrix.length; i++) {
+			fullMatrix[i] = new Array(8);
+		}
+
+		// Массив путей картинок
+		var imageUrls = [
+			'<img src="images/0.png">',
+			'<img src="images/1.png">',
+		]
+		
+		// Заполнение элементарной ячейки с вероятностями
+		function fillCell() {
+			rand = getRandomInt(0, 100);
+			value = (rand < 90) ? 1 : 	// случайная ячейка, вероятность - 90%
+				0; 						// пустая ячейка, вероятность - 10%
+			return value;
+		}
+
+		// Заполнение малого элементарного массива
+		for (var row = 0; row < matrix.length; row++) {
+			for (var col = 0; col < matrix[row].length; col++) {
+
+				matrix[row][col] = fillCell();
+
+				fullMatrix[row][col] = matrix[row][col];
+			}
+		}
+
+		// Отрисовка большого массива
+		function drawFullMatrix() {
+			for (row = 0; row < fullMatrix.length; row++) {
+				for (col = 0; col < fullMatrix[row].length; col++) {
+
+					document.write(imageUrls[fullMatrix[row][col]]);
+					document.write(' ');
+				}
+			document.write('<br>');
+			}
+		}
+
+		// Создание Круговой симметрии
+		for (row = 0; row < matrix.length; row++) {
+			for (col = 0; col < matrix[row].length; col++) {
+
+				fullMatrix[row][fullMatrix.length-1 - col] = matrix[row][col];
+				fullMatrix[fullMatrix.length-1 - row][col] = matrix[row][col];
+				fullMatrix[fullMatrix.length-1 - row][fullMatrix.length-1 - col] = matrix[row][col];
+			}
+		}
+
+		drawFullMatrix();
+
+		// Создание Вертикальной симметрии
+		document.write('======================================================================================');
+		document.write('<br>');
+
+		for (var row = 0; row < fullMatrix.length/2; row++) {
+			for (var col = fullMatrix[row].length/2; col < fullMatrix[row].length; col++) {
+
+				fullMatrix[row][col] = fullMatrix[row][fullMatrix.length-1 - col];
+			}
+		}
+
+		for (var row = fullMatrix.length/2; row < fullMatrix.length; row++) {
+			for (var col = 0; col < fullMatrix[row].length/2; col++) {
+
+				var rand = getRandomInt(0, 100);
+
+				fullMatrix[row][col] = fullMatrix[row][fullMatrix.length-1 - col] = fillCell();
+			}
+		}
+
+		drawFullMatrix();
+
+		// Создание Диагональной симметрии
+		document.write('======================================================================================');
+		document.write('<br>');
+
+		for (var row = 0; row < fullMatrix.length/2; row++) {
+			for (var col = fullMatrix.length/2; col < fullMatrix[row].length; col++) {
+
+				fullMatrix[row][col] = fullMatrix[fullMatrix.length-1 - row][fullMatrix.length-1 - col];
+			}
+		}
+
+		for (var row = fullMatrix.length/2; row < fullMatrix.length; row++) {
+			for (var col = fullMatrix.length/2; col < fullMatrix[row].length; col++) {
+
+				fullMatrix[row][col] = matrix[fullMatrix.length-1 - row][fullMatrix.length-1 - col];
+			}
+		}
+
+		drawFullMatrix();
+
+    </script>
+	
+  </body>
+</html>
