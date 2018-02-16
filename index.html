@@ -10,38 +10,38 @@
 
 	<script>
 
-		// Получение случайного числа
+		// Getting a random number
 		function getRandomInt(min, max) {
 			return Math.floor(Math.random() * (max - min + 1)) + min;
 		}
 
-		// Созадание малого двумерного массива 4x4
+		// Creating a small 2D array of 4x4
 		var matrix = new Array(4);
 		for (var i = 0; i < matrix.length; i++) {
 			matrix[i] = new Array(4);
 		}
 
-		// Создание большого двумерного массива 8x8
+		// Creating a large 2d array of 8x8
 		var fullMatrix = new Array(8);
 		for (var i = 0; i < fullMatrix.length; i++) {
 			fullMatrix[i] = new Array(8);
 		}
 
-		// Массив путей картинок
+		// Image path array
 		var imageUrls = [
 			'<img src="images/0.png">',
 			'<img src="images/1.png">',
 		]
 		
-		// Заполнение элементарной ячейки с вероятностями
+		// Filling a unit cell with probabilities
 		function fillCell() {
 			rand = getRandomInt(0, 100);
-			value = (rand < 90) ? 1 : 	// случайная ячейка, вероятность - 90%
-				0; 						// пустая ячейка, вероятность - 10%
+			value = (rand < 90) ? 1 : 	// random cell, probability - 90%
+				0; 						// empty cell, probability - 10%
 			return value;
 		}
 
-		// Заполнение малого элементарного массива
+		// Filling a small elementary array
 		for (var row = 0; row < matrix.length; row++) {
 			for (var col = 0; col < matrix[row].length; col++) {
 
@@ -51,7 +51,7 @@
 			}
 		}
 
-		// Отрисовка большого массива
+		// Drawing a large array
 		function drawFullMatrix() {
 			for (row = 0; row < fullMatrix.length; row++) {
 				for (col = 0; col < fullMatrix[row].length; col++) {
@@ -63,7 +63,7 @@
 			}
 		}
 
-		// Создание Круговой симметрии
+		// Creating a Circular Symmetry
 		for (row = 0; row < matrix.length; row++) {
 			for (col = 0; col < matrix[row].length; col++) {
 
@@ -75,7 +75,7 @@
 
 		drawFullMatrix();
 
-		// Создание Вертикальной симметрии
+		// Creating a Vertical Symmetry
 		document.write('======================================================================================');
 		document.write('<br>');
 
@@ -97,7 +97,7 @@
 
 		drawFullMatrix();
 
-		// Создание Диагональной симметрии
+		// Creating a Diagonal Symmetry
 		document.write('======================================================================================');
 		document.write('<br>');
 
@@ -112,6 +112,19 @@
 			for (var col = fullMatrix.length/2; col < fullMatrix[row].length; col++) {
 
 				fullMatrix[row][col] = matrix[fullMatrix.length-1 - row][fullMatrix.length-1 - col];
+			}
+		}
+
+		drawFullMatrix();
+
+		// Creating a Horizontal Symmetry
+		document.write('======================================================================================');
+		document.write('<br>');
+
+		for (var row = fullMatrix.length/2; row < fullMatrix.length; row++) {
+			for (var col = 0; col < fullMatrix[row].length; col++) {
+
+				fullMatrix[row][col] = fullMatrix[fullMatrix.length-1 - row][col];
 			}
 		}
 
